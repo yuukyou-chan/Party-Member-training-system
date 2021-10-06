@@ -8,6 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 加载全局样式文件
 import './styles/index.less'
 
+Vue.use(ElementUI)
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -118,6 +118,9 @@ export default {
         // 关闭loading
         this.loginLoading = false
 
+        // 将接口返回的用户相关数据存储到本地
+        window.localStorage.setItem('user', JSON.stringify(res.data.data))
+
         // 跳转到首页
         this.$router.push('/')
       }).catch(err => {

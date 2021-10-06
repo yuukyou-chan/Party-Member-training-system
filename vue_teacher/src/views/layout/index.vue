@@ -22,8 +22,8 @@
          </div>
 
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-plus">个人设置</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-circle-plus">用户退出</el-dropdown-item>
+                <el-dropdown-item >个人设置</el-dropdown-item>
+                <el-dropdown-item >用户退出</el-dropdown-item>
 
               </el-dropdown-menu>
             </el-dropdown>
