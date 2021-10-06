@@ -1,19 +1,36 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" ref="form" :model="user" >
+    <!--
+      配置表单验证：
+      1、bixv gei  el-from 组件绑定数据对象
+      2、给需要验证的表单项 el-form-item 绑定 prop属性
+         注意：prop 属性需要指定表单对象中的数据名称
+      3、通过 el-form 组件的 rules 属性配置验证规则
+
+      手动触发表单验证：
+      1、给 el-form 设置 ref 起个名字（不重复）
+      2、通过 ref 获取 el-form 组件，调用组件的 validate 进行验证
+      -->
+    <el-form
+      class="login-form"
+      ref="login-form"
+      :model="user"
+      :rules="formRules"
+      >
     <h4>欢迎使用<br>天津商业大学党建系统</h4>
-  <el-form-item >
+  <el-form-item prop="mobile">
     <el-input
     v-model="user.mobile"
     placeholder="请输入管理者账号"></el-input>
   </el-form-item>
-  <el-form-item >
+  <el-form-item prop="code">
     <el-input
+    type="password"
     v-model="user.code"
     placeholder="请输入密码"></el-input>
   </el-form-item>
-  <el-form-item >
-    <el-checkbox v-model="checked"> 我已阅读并同意用户协议和隐私条款</el-checkbox>
+  <el-form-item prop="agree">
+    <el-checkbox v-model="user.agree"> 我已阅读并同意用户协议和隐私条款</el-checkbox>
 
   </el-form-item>
   <el-form-item>
@@ -28,7 +45,7 @@
 </template>
 
 <script>
-import request from '../../utils/request'
+import { login } from '@/aip/user'
 
 export default {
   name: 'LoginIndex',
@@ -38,10 +55,31 @@ export default {
     return {
       user: {
         mobile: '',
-        code: ''
+        code: '',
+        agree: '' // 是否同意协议的选中状态
       },
-      checked: false, // 是否同意协议选中的状态
-      loginLoading: false // 登录的loading状态
+      loginLoading: false, // 登录的loading状态
+      formRules: { // 表单验证规则属性
+        mobile: [
+          { required: true, message: '账号不能为空', trigger: 'change' },
+          { pattern: /^1[3|5|7|9]\d{9}$/, message: '请输入正确的账号', trigger: 'change' }
+        ],
+        code: [
+          { required: true, message: '密码不能为空', trigger: 'change' }
+        ],
+        agree: [
+          { // 自定义校验规则
+            validator: (rule, value, callback) => {
+              if (value) {
+                callback()
+              } else {
+                callback(new Error('请同意用户协议'))
+              }
+            },
+            trigger: 'change'
+          }
+        ]
+      }
     }
   },
   computed: {},
@@ -51,21 +89,24 @@ export default {
   methods: {
     onLogin () {
       // 获取表单数据（根据接口要求绑定数据）
-      const user = this.user
+      // const user = this.user
 
       // 表单验证
+      this.$refs['login-form'].validate(valid => {
+        // 如果表单验证失败，停止请求提交
+        if (!valid) {
+          return
+        }
 
-      // 验证通过，提交登录
-
+        // 验证通过，提交登录
+        this.login()
+      })
+    },
+    login () {
       // 开启登录中 loading...
       this.loginLoading = true
 
-      request({
-        method: 'POST',
-        url: '/mp/v1_0/authorizations',
-        // data 用来设置 POST 请求体
-        data: user
-      }).then(res => {
+      login(this.user).then(res => {
         console.log(res)
 
         // 登录成功
@@ -76,6 +117,9 @@ export default {
 
         // 关闭loading
         this.loginLoading = false
+
+        // 跳转到首页
+        this.$router.push('/')
       }).catch(err => {
         // 登录失败
         console.log('登录失败', err)
