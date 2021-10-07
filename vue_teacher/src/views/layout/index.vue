@@ -2,14 +2,22 @@
   <el-container class="layout-container">
     <el-aside
       class="aside"
-      width="200px"
+      width='auto'
     >
-    <app-aside class="aside-menu"/>
+    <app-aside class="aside-menu"
+    :is-collapse='isCollapse'
+    />
     </el-aside>
     <el-container>
       <el-header class="header">
         <div>
-        <i class="el-icon-s-fold"></i>
+        <i
+        :class="{
+          'el-icon-s-fold':isCollapse,
+          'el-icon-s-unfold':!isCollapse
+        }"
+        @click="isCollapse = !isCollapse"
+        ></i>
         <span>党员培育管理系统</span>
         </div>
          <el-dropdown>
@@ -49,7 +57,8 @@ export default {
   props: {},
   data () {
     return {
-      user: {}
+      user: {}, // 当前登录用户信息
+      isCollapse: true // 侧边栏菜单
     }
   },
   computed: {},
@@ -109,7 +118,6 @@ export default {
 }
 .aside-menu{
   height: 100%;
-  width: 199px;
 }
 .h3{
     text-align: center;
