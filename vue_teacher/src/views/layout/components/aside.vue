@@ -10,7 +10,6 @@
     active-text-color="#ffd04b"
     router
     :collapse="isCollapse">
-  >
     <el-menu-item index="/">
       <i class="el-icon-s-home"></i>
       <span slot="title">首页</span>
@@ -22,7 +21,7 @@
     <el-submenu index="/applicant">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>入党申请人审查</span>
+              <span>入党申请人审查&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="application">入党申请书</el-menu-item>
