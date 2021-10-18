@@ -48,7 +48,7 @@
 
 <script>
 import AppAside from './components/aside'
-import { getUserProfile } from '@/aip/user'
+import { getUserProfile } from '@/api/user'
 
 export default {
   name: 'LayoutIndex',

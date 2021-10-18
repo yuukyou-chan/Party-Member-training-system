@@ -106,6 +106,7 @@
 </template>
 
 <script>
+import { getInfor } from '@/api/InforBase'
 export default {
   name: 'InfonbaseIndex',
   components: {},
@@ -171,14 +172,22 @@ export default {
         city: '普陀区',
         address: '上海市普陀区金沙江路 1518 弄',
         zip: 200333
-      }]
+      }],
+      infor: [] // 信息列表
     }
   },
   computed: {},
   watch: {},
-  created () {},
+  created () {
+    this.loadInfor()
+  },
   mounted () {},
   methods: {
+    loadInfor () {
+      getInfor().then(res => {
+        this.infor = res.data.data.results
+      })
+    },
     onSubmit () {
       console.log('submit!')
     }
