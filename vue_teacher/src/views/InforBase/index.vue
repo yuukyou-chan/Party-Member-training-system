@@ -21,13 +21,13 @@
           </el-form-item>
           <el-form-item label="选择专业">
             <el-select v-model="form.region" placeholder="请选择专业">
-              <el-option label="电商" value="shanghai"></el-option>
-              <el-option label="智能" value="beijing"></el-option>
-              <el-option label="计科" value="beijing"></el-option>
-              <el-option label="软件" value="beijing"></el-option>
-              <el-option label="通信" value="beijing"></el-option>
-              <el-option label="自动化" value="beijing"></el-option>
-              <el-option label="信管" value="beijing"></el-option>
+              <el-option label="电商" value="ds"></el-option>
+              <el-option label="智能" value="zn"></el-option>
+              <el-option label="计科" value="jk"></el-option>
+              <el-option label="软件" value="rj"></el-option>
+              <el-option label="通信" value="tx"></el-option>
+              <el-option label="自动化" value="zdh"></el-option>
+              <el-option label="信管" value="xg"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="学号查询">
@@ -44,23 +44,23 @@
      </div>
      <el-table
         class="list-lable"
-        :data="tableData"
+        :data="infor"
         style="width: 100%"
-        height="400"
+        height="600"
         stripe>
         <el-table-column
           fixed="left"
-          prop="date"
+          prop="title"
           label="姓名"
           width="150">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="id"
           label="学号"
           width="120">
         </el-table-column>
         <el-table-column
-          prop="province"
+          prop="status"
           label="性别"
           width="120">
         </el-table-column>
@@ -93,7 +93,35 @@
             prop="zip"
             label="联系方式"
             width="120">
-
+        </el-table-column>
+        <el-table-column
+            label="状态"
+            width="120">
+            <template slot-scope="scope">
+              <el-tag :type="inforStatus[scope.row.status].type">{{ inforStatus[scope.row.status].text}}</el-tag>
+             <!-- <el-tag v-if="scope.row.status === 0" type="success">团员</el-tag>
+              <el-tag v-if="scope.row.status === 1" type="info">积极分子</el-tag>
+              <el-tag v-if="scope.row.status === 2" type="warning">发展对象</el-tag>
+              <el-tag v-if="scope.row.status === 3" type="danger">党员</el-tag> -->
+            </template>
+        </el-table-column>
+        <el-table-column
+            label="操作"
+            width="120">
+             <template slot-scope="scope">
+                    <el-button
+                      size="mini"
+                      type="primary"
+                      circle
+                      icon="el-icon-edit"
+                      @click="handleEdit(scope.$index, scope.row)"></el-button>
+                    <el-button
+                      size="mini"
+                      circle
+                      type="danger"
+                      icon="el-icon-delete"
+                      @click="handleDelete(scope.$index, scope.row)"></el-button>
+                  </template>
         </el-table-column>
       </el-table>
       <!-- 列表分页 -->
@@ -123,57 +151,13 @@ export default {
         resource: '',
         desc: ''
       },
-      tableData: [{
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-08',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-06',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-07',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }],
-      infor: [] // 信息列表
+      infor: [], // 信息列表
+      inforStatus: [
+        { text: '团员', type: 'info' },
+        { text: '积极分子', type: '' },
+        { text: '发展对象', type: 'success' },
+        { text: '党员', type: 'danger' }
+      ]
     }
   },
   computed: {},
