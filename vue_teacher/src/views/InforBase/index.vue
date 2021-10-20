@@ -46,7 +46,6 @@
         class="list-lable"
         :data="infor"
         style="width: 100%"
-        height="600"
         stripe>
         <el-table-column
           fixed="left"
@@ -127,7 +126,10 @@
       <!-- 列表分页 -->
       <el-pagination
           layout="prev, pager, next"
-          :total="1000">
+          background
+          :total="totalCount"
+          @current-change="onCurrentChange"
+          :page-size='pageSize'>
         </el-pagination>
 </el-card>
   </div>
@@ -157,23 +159,33 @@ export default {
         { text: '积极分子', type: '' },
         { text: '发展对象', type: 'success' },
         { text: '党员', type: 'danger' }
-      ]
+      ],
+      totalCount: 0, // 总数据条数
+      pageSize: 10 // 每页大小
     }
   },
   computed: {},
   watch: {},
   created () {
-    this.loadInfor()
+    this.loadInfor(1)
   },
   mounted () {},
   methods: {
-    loadInfor () {
-      getInfor().then(res => {
-        this.infor = res.data.data.results
+    loadInfor (page = 1) {
+      getInfor({
+        page,
+        per_page: this.pageSize
+      }).then(res => {
+        const { results, total_count: totalCount } = res.data.data
+        this.infor = results
+        this.totalCount = totalCount
       })
     },
     onSubmit () {
       console.log('submit!')
+    },
+    onCurrentChange (page) {
+      this.loadInfor(page)
     }
   }
 }
