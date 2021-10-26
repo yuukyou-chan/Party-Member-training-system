@@ -16,3 +16,12 @@ export const getInfor = params => {
     params
   })
 }
+/**
+ * 获取文章频道（专业）
+ */
+export const getInforMajors = params => {
+  return request({
+    method: 'GET',
+    url: '/mp/v1_0/channels'
+  })
+}
