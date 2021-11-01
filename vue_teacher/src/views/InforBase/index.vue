@@ -21,7 +21,11 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="选择专业">
-            <el-select v-model="form.region" placeholder="请选择专业">
+            <el-select v-model="channelId" placeholder="请选择专业">
+              <el-option
+              label="全部"
+              :value="null"
+              ></el-option>
               <el-option
               :label="major.name"
               :value="major.id"
@@ -34,7 +38,11 @@
             <el-input v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="loadInfor(1)">查询</el-button>
+            <el-button
+            type="primary"
+            :disabled = "loading"
+            @click="loadInfor(1)"
+            >查询</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -43,6 +51,7 @@
     <span style="font-size: 17px;">根据筛选条件查询到的结果</span>
      </div>
      <el-table
+        v-loading="loading"
         class="list-lable"
         :data="infor"
         style="width: 100%"
@@ -76,11 +85,6 @@
         <el-table-column
           prop="zip"
           label="专业"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="zip"
-          label="职务"
           >
         </el-table-column>
           <el-table-column
@@ -120,7 +124,7 @@
                       circle
                       type="danger"
                       icon="el-icon-delete"
-                      @click="handleDelete(scope.$index, scope.row)"></el-button>
+                      @click="onDeleteArticle(scope.row.id)"></el-button>
                   </template>
         </el-table-column>
       </el-table>
@@ -129,6 +133,7 @@
           layout="prev, pager, next"
           background
           :total="totalCount"
+          :disabled="loading"
           @current-change="onCurrentChange"
           :page-size='pageSize'>
         </el-pagination>
@@ -139,7 +144,8 @@
 <script>
 import {
   getInfor,
-  getInforMajors
+  getInforMajors,
+  deleteArticle
 } from '@/api/InforBase'
 export default {
   name: 'InfonbaseIndex',
@@ -166,8 +172,10 @@ export default {
       ],
       totalCount: 0, // 总数据条数
       pageSize: 10, // 每页大小
-      status: null,
-      majors: []
+      status: null, // 查询学生状态
+      majors: [], // 按专业筛选
+      channelId: null, // 查询文章的频道
+      loading: true // 表格数据加载中
     }
   },
   computed: {},
@@ -179,15 +187,20 @@ export default {
   mounted () {},
   methods: {
     loadInfor (page = 1) {
+      this.loading = true
       getInfor({
         page,
         per_page: this.pageSize,
-        status: this.status
+        status: this.status,
+        channel_id: this.channelId
         // major: this.major
       }).then(res => {
         const { results, total_count: totalCount } = res.data.data
         this.infor = results
         this.totalCount = totalCount
+
+        // 关闭加载中 v-loading
+        this.loading = false
       })
     },
     onCurrentChange (page) {
@@ -196,6 +209,29 @@ export default {
     loadInforMajors () {
       getInforMajors().then(res => {
         this.majors = res.data.data.channels
+      })
+    },
+
+    onDeleteArticle (articleId) {
+      console.log(articleId)
+      console.log(articleId.toString())
+      this.$confirm('确认删除吗？', '删除提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 确认执行这里
+        deleteArticle(articleId).then(res => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
   }
