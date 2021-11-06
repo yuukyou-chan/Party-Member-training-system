@@ -18,7 +18,7 @@
         }"
         @click="isCollapse = !isCollapse"
         ></i>
-        <span>党员培育管理系统</span>
+        <span>信息工程学院智慧培优平台</span>
         </div>
          <el-dropdown>
            <div class="avatar-wrap">

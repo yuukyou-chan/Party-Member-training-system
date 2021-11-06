@@ -21,11 +21,11 @@
     <el-submenu index="/applicant">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>入党申请人审查&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span>申请人审查&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="application">入党申请书</el-menu-item>
-              <el-menu-item index="AppForm">入党申请表</el-menu-item>
+              <el-menu-item index="application">申请书</el-menu-item>
+              <el-menu-item index="AppForm">申请表</el-menu-item>
               <el-menu-item index="ConversationForm">谈话表</el-menu-item>
             </el-menu-item-group>
     </el-submenu>

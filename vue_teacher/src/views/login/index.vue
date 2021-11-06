@@ -17,7 +17,7 @@
       :model="user"
       :rules="formRules"
       >
-    <h4>欢迎使用<br>天津商业大学党建系统</h4>
+    <h4>欢迎使用<br>信息工程学院智慧培优平台</h4>
   <el-form-item prop="mobile">
     <el-input
     v-model="user.mobile"
@@ -145,7 +145,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(login-bgp.png) no-repeat;
+  background: url(bg4.jpg) no-repeat;
   background-size: cover;
 }
 .login-form{
