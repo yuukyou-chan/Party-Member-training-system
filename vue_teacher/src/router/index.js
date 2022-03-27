@@ -4,6 +4,9 @@ import Login from '@/views/login'
 import Home from '@/views/home/'
 import Layout from '@/views/layout/'
 import InforBase from '@/views/InforBase/'
+import AppliForm from '@/views/Application/AppliForm/'
+import AppliText from '@/views/Application/AppliText/'
+import Conversation from '@/views/Application/Conversation/'
 
 Vue.use(VueRouter)
 
@@ -28,6 +31,21 @@ const routes = [
         path: '/inforBase',
         name: 'InforBase',
         component: InforBase
+      },
+      {
+        path: '/appliText',
+        name: 'AppliText',
+        component: AppliText
+      },
+      {
+        path: '/appliForm',
+        name: 'AppliForm',
+        component: AppliForm
+      },
+      {
+        path: '/conversation',
+        name: 'Conversation',
+        component: Conversation
       }
     ]
   }

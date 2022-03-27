@@ -24,9 +24,9 @@
               <span>申请人审查&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="application">申请书</el-menu-item>
-              <el-menu-item index="AppForm">申请表</el-menu-item>
-              <el-menu-item index="ConversationForm">谈话表</el-menu-item>
+              <el-menu-item index="/AppliForm">申请书</el-menu-item>
+              <el-menu-item index="/AppliText">申请表</el-menu-item>
+              <el-menu-item index="/Conversation">谈话表</el-menu-item>
             </el-menu-item-group>
     </el-submenu>
     <el-submenu index="/activists">
