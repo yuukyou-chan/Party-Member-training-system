@@ -26,6 +26,7 @@
             <el-menu-item-group>
               <el-menu-item index="/AppliForm">申请书</el-menu-item>
               <el-menu-item index="/AppliText">申请表</el-menu-item>
+              <el-menu-item index="/Contact">谈话联系人</el-menu-item>
               <el-menu-item index="/Conversation">谈话表</el-menu-item>
             </el-menu-item-group>
     </el-submenu>

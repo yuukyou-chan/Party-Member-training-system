@@ -6,6 +6,7 @@ import Layout from '@/views/layout/'
 import InforBase from '@/views/InforBase/'
 import AppliForm from '@/views/Application/AppliForm/'
 import AppliText from '@/views/Application/AppliText/'
+import Contact from '@/views/Application/Contact/'
 import Conversation from '@/views/Application/Conversation/'
 
 Vue.use(VueRouter)
@@ -41,6 +42,11 @@ const routes = [
         path: '/appliForm',
         name: 'AppliForm',
         component: AppliForm
+      },
+      {
+        path: '/contact',
+        name: 'Contact',
+        component: Contact
       },
       {
         path: '/conversation',
