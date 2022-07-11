@@ -8,6 +8,8 @@ import AppliForm from '@/views/Application/AppliForm/'
 import AppliText from '@/views/Application/AppliText/'
 import Contact from '@/views/Application/Contact/'
 import Conversation from '@/views/Application/Conversation/'
+import DevelopInspection from '@/views/Activists/DevelopInspection/'
+import OnlineLearning from '@/views/Activists/OnlineLearning/'
 
 Vue.use(VueRouter)
 
@@ -52,6 +54,16 @@ const routes = [
         path: '/conversation',
         name: 'Conversation',
         component: Conversation
+      },
+      {
+        path: '/developInspection',
+        name: 'DevelopInspection',
+        component: DevelopInspection
+      },
+      {
+        path: '/onlineLearning',
+        name: 'OnlineLearning',
+        component: OnlineLearning
       }
     ]
   }

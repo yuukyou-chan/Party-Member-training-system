@@ -101,13 +101,12 @@
         <el-form-item label="状态">
           <el-radio-group v-model="status">
             <el-radio label="null">全部</el-radio>
-            <el-radio label="0">未审核</el-radio>
-            <el-radio label="1">已通过</el-radio>
-            <el-radio label="2">未通过</el-radio>
+            <el-radio label="0">已分配</el-radio>
+            <el-radio label="1">未分配</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="选择专业">
-          <el-select v-model="channelId" placeholder="请选择专业">
+        <el-form-item label="选择支部">
+          <el-select v-model="channelId" placeholder="请选择支部">
             <el-option
             label="全部"
             :value="null"
@@ -120,7 +119,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学号查询">
+        <el-form-item label="谈话人编号查询">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item>
@@ -146,7 +145,7 @@
           </el-table-column>
           <el-table-column
             prop="id"
-            label="学号"
+            label="编号"
             >
           </el-table-column>
           <el-table-column
@@ -154,26 +153,7 @@
             label="性别"
             >
           </el-table-column>
-          <el-table-column
-            prop="city"
-            label="民族"
-            >
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="入学年份"
-            >
-          </el-table-column>
-          <el-table-column
-            prop="zip"
-            label="专业"
-            >
-          </el-table-column>
-            <el-table-column
-              prop="zip"
-              label="政治面貌"
-              >
-              </el-table-column>
+
             <el-table-column
               prop="zip"
               label="联系方式"

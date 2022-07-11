@@ -59,44 +59,40 @@
         <el-table-column
           fixed
           prop="title"
-          label="姓名"
-          width="80">
+          label="时间"
+          width="100">
         </el-table-column>
         <el-table-column
           prop="id"
-          label="学号"
+          label="姓名"
+          width="100">
           >
         </el-table-column>
         <el-table-column
           prop="status"
-          label="性别"
+          label="班级"
+          width="100"
           >
         </el-table-column>
         <el-table-column
           prop="city"
-          label="民族"
+          label="学号"
+          width="100"
           >
         </el-table-column>
         <el-table-column
           prop="address"
-          label="入学年份"
+          label="申请表"
           >
+          <template slot-scope = 'scope'>
+               <el-image
+                    style="width: 50px; height: 50px"
+                    :src="scope.row.cover.images[0]"
+                    :preview-src-list="scope.row.cover.images"></el-image>
+<!--            <img :src='scope.row.cover.images[0]' /> -->
+          </template>
         </el-table-column>
-        <el-table-column
-          prop="zip"
-          label="专业"
-          >
-        </el-table-column>
-          <el-table-column
-            prop="zip"
-            label="政治面貌"
-            >
-            </el-table-column>
-          <el-table-column
-            prop="zip"
-            label="联系方式"
-            >
-        </el-table-column>
+
         <el-table-column
             label="状态"
             >
@@ -117,13 +113,13 @@
                       size="mini"
                       type="primary"
                       circle
-                      icon="el-icon-edit"
+                      icon="el-icon-check"
                       @click="handleEdit(scope.$index, scope.row)"></el-button>
                     <el-button
                       size="mini"
                       circle
                       type="danger"
-                      icon="el-icon-delete"
+                      icon="el-icon-close"
                       @click="onDeleteArticle(scope.row.id)"></el-button>
                   </template>
         </el-table-column>
@@ -146,9 +142,9 @@ import {
   getInfor,
   getInforMajors,
   deleteArticle
-} from '@/api/AppliText'
+} from '@/api/AppliForm'
 export default {
-  name: 'AppliTexIndex',
+  name: 'AppliFormIndex',
   components: {},
   props: {},
   data () {
@@ -165,17 +161,19 @@ export default {
       },
       infor: [], // 信息列表
       inforStatus: [
-        { text: '团员', type: 'info' },
-        { text: '积极分子', type: '' },
-        { text: '发展对象', type: 'success' },
-        { text: '党员', type: 'danger' }
+        { text: '待审核', type: '' },
+        { text: '已通过', type: 'success' },
+        { text: '未通过', type: 'danger' }
       ],
       totalCount: 0, // 总数据条数
       pageSize: 10, // 每页大小
       status: null, // 查询学生状态
       majors: [], // 按专业筛选
       channelId: null, // 查询文章的频道
-      loading: true // 表格数据加载中
+      loading: true, // 表格数据加载中
+      srcList: [
+        ''
+      ]
     }
   },
   computed: {},
