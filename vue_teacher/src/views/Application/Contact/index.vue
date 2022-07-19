@@ -17,28 +17,28 @@
         <span style="font-size: 17px;">谈话人分配情况</span>
          </div>
       <el-form ref="form" :model="form" label-width="100px" size="small">
-        <el-form-item label="选择党支部">
-          <el-select v-model="channelId" placeholder="请选择专业">
+        <el-form-item label="查询方式">
+          <el-select
+            v-model="checkWayStuValue"
+            placeholder="选择查询方式"
+            style="width: 150px">
             <el-option
-            label="全部"
-            :value="null"
-            ></el-option>
-            <el-option
-            :label="major.name"
-            :value="major.id"
-            v-for="(major,index) in majors"
-            :key="index"
+            v-for="wayStu in checkWayStu"
+            :key="wayStu.value"
+            :label="wayStu.label"
+            :value="wayStu.value"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学号查询">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item>
+        <el-form-item label="输入内容">
+          <el-input
+            v-model="form.name"
+            style="width: 150px;"></el-input>
           <el-button
-          type="primary"
-          :disabled = "loading"
-          @click="loadInfor(1)"
+            type="primary"
+            :disabled = "loading"
+            @click="loadInfor(1)"
+            style="margin-left: 20px;"
           >查询</el-button>
         </el-form-item>
       </el-form>
@@ -97,37 +97,32 @@
       <div slot="header" class="clearfix">
         <span style="font-size: 17px;">谈话人信息</span>
          </div>
-      <el-form ref="form" :model="form" label-width="70px" size="small">
+      <el-form ref="form" :model="form" label-width="110px" size="small">
         <el-form-item label="状态">
           <el-radio-group v-model="status">
-            <el-radio label="null">全部</el-radio>
-            <el-radio label="0">已分配</el-radio>
-            <el-radio label="1">未分配</el-radio>
+            <el-radio :label="null">全部</el-radio>
+            <el-radio :label="0">已分配</el-radio>
+            <el-radio :label="1">未分配</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="选择支部">
-          <el-select v-model="channelId" placeholder="请选择支部">
+        <el-form-item label="查询方式">
+          <el-select v-model="checkWayTeacValue" placeholder="请选择查询方式">
             <el-option
-            label="全部"
-            :value="null"
-            ></el-option>
-            <el-option
-            :label="major.name"
-            :value="major.id"
-            v-for="(major,index) in majors"
-            :key="index"
+            v-for="wayTeac in checkWayTeac"
+            :label="wayTeac.label"
+            :value="wayTeac.value"
+            :key="wayTeac.value"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="谈话人编号查询">
           <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item>
           <el-button
-          type="primary"
-          :disabled = "loading"
-          @click="loadInfor(1)"
-          >查询</el-button>
+            type="primary"
+            :disabled = "loading"
+            @click="loadInfor(1)"
+            style="margin-left: 20px;"
+           >查询</el-button>
         </el-form-item>
       </el-form>
 
@@ -239,7 +234,30 @@ export default {
       pageSize: 10, // 每页大小
       status: null, // 查询学生状态
       majors: [], // 按专业筛选
-      channelId: null, // 查询文章的频道
+      checkWayStu:
+        [{
+          value: '0',
+          label: '学生姓名'
+        }, {
+          value: '1',
+          label: '学生学号'
+        }, {
+          value: '2',
+          label: '教师姓名'
+        }, {
+          value: '3',
+          label: '教师编号'
+        }],
+      checkWayTeac:
+        [{
+          value: '0',
+          label: '教师姓名'
+        }, {
+          value: '1',
+          label: '教师编号'
+        }],
+      checkWayStuValue: '',
+      checkWayTeacValue: '',
       loading: true // 表格数据加载中
     }
   },
@@ -256,8 +274,7 @@ export default {
       getInfor({
         page,
         per_page: this.pageSize,
-        status: this.status,
-        channel_id: this.channelId
+        status: this.status
         // major: this.major
       }).then(res => {
         const { results, total_count: totalCount } = res.data.data
@@ -308,6 +325,10 @@ export default {
   margin-bottom: 20px;
 }
 .list-lable{
-      margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+.el-input--small {
+  font-size: 7px;
+  width: 150px;
 }
 </style>
