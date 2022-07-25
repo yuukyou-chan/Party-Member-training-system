@@ -3,11 +3,11 @@
   <div class="InforBase-container">
           <!-- 面包屑导航 -->
       <el-card class="filter-card">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item>申请人审查</el-breadcrumb-item>
-              <el-breadcrumb-item>谈话人分配</el-breadcrumb-item>
-            </el-breadcrumb>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>申请人审查</el-breadcrumb-item>
+          <el-breadcrumb-item>谈话人分配</el-breadcrumb-item>
+        </el-breadcrumb>
       </el-card>
 
 <el-row :gutter="20">
@@ -16,7 +16,7 @@
       <div slot="header" class="clearfix">
         <span style="font-size: 17px;">谈话人分配情况</span>
          </div>
-      <el-form ref="form" :model="form" label-width="100px" size="small">
+      <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-form-item label="查询方式">
           <el-select
             v-model="checkWayStuValue"
@@ -68,16 +68,58 @@
             >
           </el-table-column>
           <el-table-column
-            prop="city"
+            prop="id"
             label="谈话人"
             >
+            <template slot-scope="scope">
+              <div v-show="!scope.row.isshow">{{scope.row.title}}}</div>
+              <el-select
+                v-model="checkWayStuValue"
+                v-show="scope.row.isshow"
+                placeholder="谈话人"
+                size="mini">
+              <el-option
+                v-for="item in checkWayStu"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                size="mini"
+                >
+              </el-option>
+            </el-select>
+            </template>
           </el-table-column>
           <el-table-column
             prop="address"
             label="谈话人联系方式"
             >
           </el-table-column>
-
+          <el-table-column
+              fixed="right"
+              label="操作">
+               <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="primary"
+                    circle
+                    icon="el-icon-edit"
+                    v-show="!scope.row.isshow"
+                    @click="Edit(scope)"></el-button>
+                   <el-button
+                    v-show="scope.row.isshow"
+                    size="mini"
+                    type="success"
+                    icon="el-icon-check"
+                    circle></el-button>
+                    <el-button
+                    v-show="scope.row.isshow"
+                    size="mini"
+                    type="danger"
+                    icon="el-icon-close"
+                    @click="Close(scope)"
+                    circle></el-button>
+                </template>
+          </el-table-column>
         </el-table>
         <!-- 列表分页 -->
         <el-pagination
@@ -170,19 +212,27 @@
               label="操作"
               width="120">
                <template slot-scope="scope">
-                      <el-button
-                        size="mini"
-                        type="primary"
-                        circle
-                        icon="el-icon-edit"
-                        @click="handleEdit(scope.$index, scope.row)"></el-button>
-                      <el-button
-                        size="mini"
-                        circle
-                        type="danger"
-                        icon="el-icon-delete"
-                        @click="onDeleteArticle(scope.row.id)"></el-button>
-                    </template>
+                  <el-button
+                    size="mini"
+                    type="primary"
+                    circle
+                    icon="el-icon-edit"
+                    v-show="!scope.row.isshow"
+                    @click="Edit(scope)"></el-button>
+                   <el-button
+                    v-show="scope.row.isshow"
+                    size="mini"
+                    type="success"
+                    icon="el-icon-check"
+                    circle></el-button>
+                    <el-button
+                    v-show="scope.row.isshow"
+                    size="mini"
+                    type="danger"
+                    icon="el-icon-close"
+                    @click="Close(scope)"
+                    circle></el-button>
+                </template>
           </el-table-column>
         </el-table>
         <!-- 列表分页 -->
@@ -258,7 +308,8 @@ export default {
         }],
       checkWayStuValue: '',
       checkWayTeacValue: '',
-      loading: true // 表格数据加载中
+      loading: true, // 表格数据加载中
+      edit: { index: '', isshow: false }
     }
   },
   computed: {},
@@ -295,8 +346,6 @@ export default {
     },
 
     onDeleteArticle (articleId) {
-      console.log(articleId)
-      console.log(articleId.toString())
       this.$confirm('确认删除吗？', '删除提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -315,6 +364,16 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    Edit (scope) {
+      if (scope.row.isshow === undefined) {
+        this.$set(scope.row, 'isshow', false)
+      }
+      scope.row.isshow = !scope.row.isshow
+    },
+    Close (scope) {
+      scope.row.isshow = false
+      console.log(scope.row)
     }
   }
 }
