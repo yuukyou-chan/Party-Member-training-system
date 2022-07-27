@@ -165,6 +165,11 @@
             @click="loadInfor(1)"
             style="margin-left: 20px;"
            >查询</el-button>
+           <el-button
+            type="primary"
+            @click="dialogFormVisible = true"
+            style="margin-left: 20px;"
+           >添加联系人</el-button>
         </el-form-item>
       </el-form>
 
@@ -244,7 +249,26 @@
             @current-change="onCurrentChange"
             :page-size='pageSize'>
           </el-pagination>
-
+          <el-dialog title="添加谈话联系人" :visible.sync="dialogFormVisible" :append-to-body="true">
+            <el-form :model="addSpeakers"  :inline="true">
+              <el-form-item label="姓名" label-width="140px">
+                <el-input v-model="addSpeakers.name" style="width: 150px;"></el-input>
+              </el-form-item>
+              <el-form-item label="编号" label-width="140px">
+                <el-input v-model="addSpeakers.num" style="width: 150px;"></el-input>
+              </el-form-item>
+              <el-form-item label="性别" label-width="140px">
+                <el-input v-model="addSpeakers.sex" style="width: 150px;"></el-input>
+              </el-form-item>
+              <el-form-item label="联系方式" label-width="140px">
+                <el-input v-model="addSpeakers.phone" style="width: 150px;"></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false">添 加</el-button>
+            </div>
+          </el-dialog>
   </el-card>
   </div></el-col>
 </el-row>
@@ -309,7 +333,14 @@ export default {
       checkWayStuValue: '',
       checkWayTeacValue: '',
       loading: true, // 表格数据加载中
-      edit: { index: '', isshow: false }
+      edit: { index: '', isshow: false },
+      dialogFormVisible: false,
+      addSpeakers: {
+        name: '',
+        num: '',
+        sex: '',
+        phone: ''
+      }
     }
   },
   computed: {},
@@ -366,6 +397,7 @@ export default {
       })
     },
     Edit (scope) {
+      console.log(this)
       if (scope.row.isshow === undefined) {
         this.$set(scope.row, 'isshow', false)
       }
@@ -374,6 +406,24 @@ export default {
     Close (scope) {
       scope.row.isshow = false
       console.log(scope.row)
+    },
+    pop () {
+      this.$prompt('请输入邮箱', '添加谈话联系人', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: '邮箱格式不正确'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '你的邮箱是: ' + value
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      })
     }
   }
 }
