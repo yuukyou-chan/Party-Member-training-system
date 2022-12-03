@@ -55,7 +55,7 @@
       <i class="el-icon-files"></i>
       <span slot="title">反馈箱</span>
     </el-menu-item>
-    <el-menu-item index="/article">
+    <el-menu-item index="/publish">
       <i class="el-icon-tickets"></i>
       <span slot="title">文章管理</span>
     </el-menu-item>

@@ -108,7 +108,8 @@ export default {
 
       login(this.user).then(res => {
         console.log(res)
-
+        debugger
+        const { token } = res.data
         // 登录成功
         this.$message({
           message: '登录成功',
@@ -117,9 +118,9 @@ export default {
 
         // 关闭loading
         this.loginLoading = false
-
+        localStorage.token = token
         // 将接口返回的用户相关数据存储到本地
-        window.localStorage.setItem('user', JSON.stringify(res.data.data))
+        // window.localStorage.setItem('user', JSON.stringify(res.data.data))
 
         // 跳转到首页
         this.$router.push('/')

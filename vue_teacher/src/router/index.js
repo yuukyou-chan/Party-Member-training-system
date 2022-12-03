@@ -9,7 +9,7 @@ import AppliText from '@/views/Application/AppliText/'
 import Contact from '@/views/Application/Contact/'
 import Conversation from '@/views/Application/Conversation/'
 import DevelopInspection from '@/views/Activists/DevelopInspection/'
-import OnlineLearning from '@/views/Activists/OnlineLearning/'
+import Publish from '@/views/publish'
 
 Vue.use(VueRouter)
 
@@ -61,9 +61,9 @@ const routes = [
         component: DevelopInspection
       },
       {
-        path: '/onlineLearning',
-        name: 'OnlineLearning',
-        component: OnlineLearning
+        path: '/publish',
+        name: 'publish',
+        component: Publish
       }
     ]
   }
