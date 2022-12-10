@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const reuqest = axios.create({
   // 加了斜杠，前缀默认为域名地址
-  baseURL: process.env.VUE_APP_BASE_URL || '/admin/api/'
+  baseURL: process.env.VUE_APP_BASE_URL || '/api/'
 })
 
 reuqest.interceptors.request.use(function (config) {

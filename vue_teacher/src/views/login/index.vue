@@ -20,17 +20,17 @@
     <h4>欢迎使用<br>信息工程学院智慧培优平台</h4>
   <el-form-item prop="mobile">
     <el-input
-    v-model="user.mobile"
+    v-model="user.username"
     placeholder="请输入管理者账号"></el-input>
   </el-form-item>
   <el-form-item prop="code">
     <el-input
     type="password"
-    v-model="user.code"
+    v-model="user.password"
     placeholder="请输入密码"></el-input>
   </el-form-item>
   <el-form-item prop="agree">
-    <el-checkbox v-model="user.agree"> 我已阅读并同意用户协议和隐私条款</el-checkbox>
+    <el-checkbox v-model="agree"> 我已阅读并同意用户协议和隐私条款</el-checkbox>
 
   </el-form-item>
   <el-form-item>
@@ -54,31 +54,31 @@ export default {
   data () {
     return {
       user: {
-        mobile: '',
-        code: '',
-        agree: '' // 是否同意协议的选中状态
+        username: '',
+        password: ''
       },
+      agree: '', // 是否同意协议的选中状态
       loginLoading: false, // 登录的loading状态
       formRules: { // 表单验证规则属性
-        mobile: [
+        username: [
           { required: true, message: '账号不能为空', trigger: 'change' },
-          { pattern: /^1[3|5|7|9]\d{9}$/, message: '请输入正确的账号', trigger: 'change' }
+          { pattern: /\d{8}$/, message: '请输入正确的账号', trigger: 'change' }
         ],
-        code: [
+        password: [
           { required: true, message: '密码不能为空', trigger: 'change' }
-        ],
-        agree: [
-          { // 自定义校验规则
-            validator: (rule, value, callback) => {
-              if (value) {
-                callback()
-              } else {
-                callback(new Error('请同意用户协议'))
-              }
-            },
-            trigger: 'change'
-          }
         ]
+        // agree: [
+        //   { // 自定义校验规则
+        //     validator: (rule, value, callback) => {
+        //       if (value) {
+        //         callback()
+        //       } else {
+        //         callback(new Error('请同意用户协议'))
+        //       }
+        //     },
+        //     trigger: 'change'
+        //   }
+        // ]
       }
     }
   },
@@ -105,10 +105,11 @@ export default {
     login () {
       // 开启登录中 loading...
       this.loginLoading = true
+      console.log(this.user)
 
       login(this.user).then(res => {
         console.log(res)
-        debugger
+        // debugger
         const { token } = res.data
         // 登录成功
         this.$message({

@@ -9,7 +9,7 @@ export const login = data => {
     method: 'POST',
     url: '/login',
     // data 用来设置 POST 请求体
-    data
+    data: data
   })
 }
 
