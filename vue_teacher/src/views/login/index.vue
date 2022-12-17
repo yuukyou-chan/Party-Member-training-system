@@ -46,6 +46,7 @@
 
 <script>
 import { login } from '@/api/user'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'LoginIndex',
@@ -87,6 +88,7 @@ export default {
   created () {},
   mounted () {},
   methods: {
+    ...mapMutations(['updateToken', 'updateUserInfo']),
     onLogin () {
       // 获取表单数据（根据接口要求绑定数据）
       // const user = this.user
@@ -108,7 +110,6 @@ export default {
       console.log(this.user)
 
       login(this.user).then(res => {
-        console.log(res)
         // debugger
         const { token } = res.data
         // 登录成功
@@ -119,12 +120,17 @@ export default {
 
         // 关闭loading
         this.loginLoading = false
-        localStorage.token = token
-        // 将接口返回的用户相关数据存储到本地
-        // window.localStorage.setItem('user', JSON.stringify(res.data.data))
 
+        // 将接口返回的用户相关数据存储到本地
+        localStorage.token = token
+        // 保存到vuex中
+        this.updateToken(token)
+        window.localStorage.setItem('user', JSON.stringify(res.data.data))
+        this.updateUserInfo(res.data.data)
         // 跳转到首页
-        this.$router.push('/')
+        this.$router.push('/').catch(err => {
+          console.log(err)
+        })
       }).catch(err => {
         // 登录失败
         console.log('登录失败', err)

@@ -10,6 +10,8 @@ import Contact from '@/views/Application/Contact/'
 import Conversation from '@/views/Application/Conversation/'
 import DevelopInspection from '@/views/Activists/DevelopInspection/'
 import Publish from '@/views/publish'
+import UserInfo from '@/views/user/userInfo.vue'
+import UserPwd from '@/views/user/userPwd.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +24,6 @@ const routes = [
   },
   {
     path: '/',
-    name: 'layout',
     component: Layout,
     children: [
       {
@@ -64,6 +65,16 @@ const routes = [
         path: '/publish',
         name: 'publish',
         component: Publish
+      },
+      {
+        path: '/userInfo',
+        name: 'UserInfo',
+        component: UserInfo
+      },
+      {
+        path: '/userPwd',
+        name: 'UserPwd',
+        component: UserPwd
       }
     ]
   }

@@ -52,7 +52,7 @@ exports.login = (req, res) => {
     // 执行 SQL 语句失败
     if (err) return res.cc(err)
     // 执行 SQL 语句成功，但是查询到数据条数不等于 1
-    if (results.length !== 1) return res.cc('未查找到用户名，登录失败！')
+    if (results.length !== 1) return res.cc( '未查找到用户名，登录失败！', 401)
 
     // TODO：判断用户输入的登录密码是否和数据库中的密码一致
     const compareResult = bcrypt.compareSync(userinfo.password, results[0].password)
@@ -61,7 +61,7 @@ exports.login = (req, res) => {
       return res.cc('密码错误！登录失败！')
     }
 
-      // 剔除完毕之后，user 中只保留了用户的 id, username, nickname, email 这四个属性的值
+    // 剔除完毕之后，user 中只保留了用户的 id, username, nickname, email 这四个属性的值
     const user = { ...results[0], password: '', user_pic: '' }
     // 对用户信息进行加密， 生成 Token 字符串
     const tokenStr = jwt.sign(user, config.jwtSecretKey, {expiresIn: config.expiresIn}) 
@@ -70,10 +70,13 @@ exports.login = (req, res) => {
       status: 0,
       message: '登录成功！',
       // 为了方便客户端使用 Token，在服务器端直接拼接上 Bearer 的前缀
-      token: 'Bearer ' + tokenStr,
+      token: tokenStr,
+      data: user
     })
   })
+}
 
-
-
+// 更新用户基本信息的处理函数
+exports.updateUserInfo = (req, res) => {
+  res.send('ok')
 }

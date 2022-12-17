@@ -22,11 +22,11 @@
         </div>
          <el-dropdown>
            <div class="avatar-wrap">
-               <img  class="avatar" :src="user.photo" />
-               <span>{{user.name}}</span>
-               <span class="el-dropdown-link">
-               <i class="el-icon-arrow-down el-icon--right"></i>
-               </span>
+              <span style="margin: 20px;">{{user.nickname}}</span>
+              <el-avatar :style="`background:${extractColorByName('管理员')}`"> {{user.nickname.slice(0,1)}} </el-avatar>
+              <span class="el-dropdown-link">
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
          </div>
 
               <el-dropdown-menu slot="dropdown">
@@ -48,7 +48,7 @@
 
 <script>
 import AppAside from './components/aside'
-import { getUserProfile } from '@/api/user'
+// import { getUserProfile } from '@/api/user'
 
 export default {
   name: 'LayoutIndex',
@@ -71,9 +71,7 @@ export default {
   mounted () {},
   methods: {
     loadUserProfile () {
-      getUserProfile().then(res => {
-        this.user = res.data.data
-      })
+      this.user = JSON.parse(window.localStorage.getItem('user'))
     },
 
     onLogout () {
@@ -88,8 +86,16 @@ export default {
         this.$router.push('/login')
       }).catch(() => {
       })
-    }
+    },
 
+    extractColorByName (name) {
+      var temp = []
+      temp.push('#')
+      for (let index = 0; index < name.length; index++) {
+        temp.push(parseInt(name[index].charCodeAt(0), 10).toString(16))
+      }
+      return temp.slice(0, 5).join('').slice(0, 4)
+    }
   }
 }
 </script>

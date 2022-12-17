@@ -1,7 +1,7 @@
 module.exports = {
-  root: true,
+  root: false,
   env: {
-    node: true
+    node: false,
   },
   extends: [
     'plugin:vue/essential',
@@ -13,5 +13,10 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  }
+  },
+  globals: {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "process": true
+},
 }

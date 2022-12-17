@@ -19,37 +19,37 @@
       <span slot="title">学生资料库</span>
     </el-menu-item>
     <el-submenu index="/applicant">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>申请人审查&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/AppliForm">申请书</el-menu-item>
-              <el-menu-item index="/AppliText">申请表</el-menu-item>
-              <el-menu-item index="/Contact">谈话联系人</el-menu-item>
-              <el-menu-item index="/Conversation">谈话表</el-menu-item>
-            </el-menu-item-group>
+      <template slot="title">
+        <i class="el-icon-location"></i>
+        <span>申请人审查&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </template>
+      <el-menu-item-group>
+        <el-menu-item index="/AppliForm">申请书</el-menu-item>
+        <el-menu-item index="/AppliText">申请表</el-menu-item>
+        <el-menu-item index="/Contact">谈话联系人</el-menu-item>
+        <el-menu-item index="/Conversation">谈话表</el-menu-item>
+      </el-menu-item-group>
     </el-submenu>
     <el-submenu index="/activists">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>积极分子审查</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/OnlineLearning">线上学习情况</el-menu-item>
-              <el-menu-item index="/DevelopInspection">培养考察</el-menu-item>
-            </el-menu-item-group>
+      <template slot="title">
+        <i class="el-icon-location"></i>
+        <span>积极分子审查</span>
+      </template>
+      <el-menu-item-group>
+        <el-menu-item index="/OnlineLearning">线上学习情况</el-menu-item>
+        <el-menu-item index="/DevelopInspection">培养考察</el-menu-item>
+      </el-menu-item-group>
     </el-submenu>
     <el-submenu index="ThoughtReports">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>思想汇报</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/firRe">第一季度</el-menu-item>
-              <el-menu-item index="/secRe">第二季度</el-menu-item>
-              <el-menu-item index="/thiRe">第三季度</el-menu-item>
-            </el-menu-item-group>
+      <template slot="title">
+        <i class="el-icon-location"></i>
+        <span>思想汇报</span>
+      </template>
+      <el-menu-item-group>
+        <el-menu-item index="/firRe">第一季度</el-menu-item>
+        <el-menu-item index="/secRe">第二季度</el-menu-item>
+        <el-menu-item index="/thiRe">第三季度</el-menu-item>
+      </el-menu-item-group>
     </el-submenu>
     <el-menu-item index="/feedback">
       <i class="el-icon-files"></i>
@@ -59,6 +59,17 @@
       <i class="el-icon-tickets"></i>
       <span slot="title">文章管理</span>
     </el-menu-item>
+    <el-submenu index="userCenter">
+      <template slot="title">
+        <i class="el-icon-location"></i>
+        <span>个人中心</span>
+      </template>
+      <el-menu-item-group>
+        <el-menu-item index="/userInfo">基本资料</el-menu-item>
+        <!-- <el-menu-item index="/secRe">头像修改</el-menu-item> -->
+        <el-menu-item index="/userPwd">重置密码</el-menu-item>
+      </el-menu-item-group>
+    </el-submenu>
   </el-menu>
 </template>
 

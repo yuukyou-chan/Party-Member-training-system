@@ -27,8 +27,8 @@
               :value="null"
               ></el-option>
               <el-option
-              :label="major.name"
-              :value="major.id"
+              :label="major"
+              :value="major"
               v-for="(major,index) in majors"
               :key="index"
               ></el-option>
@@ -172,7 +172,7 @@ export default {
       ],
       totalCount: 0, // 总数据条数
       pageSize: 10, // 每页大小
-      status: null, // 查询学生状态
+      status: '', // 查询学生状态
       majors: [], // 按专业筛选
       channelId: null, // 查询文章的频道
       loading: true // 表格数据加载中
@@ -208,7 +208,8 @@ export default {
     },
     loadInforMajors () {
       getInforMajors().then(res => {
-        this.majors = res.data.data.channels
+        this.majors = res.data.data
+        console.log(res.data.data)
       })
     },
 
