@@ -1,6 +1,7 @@
 import { Message } from 'element-ui'
 import router from '../router'
 import axios from 'axios'
+import Vue from 'vue'
 
 const reuqest = axios.create({
   // 加了斜杠，前缀默认为域名地址
@@ -34,7 +35,10 @@ reuqest.interceptors.response.use((res) => {
 
   return res
 }, (err) => {
-  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  Vue.prototype.$message.error({
+    type: 'error',
+    message: err.response.data.message
+  })
   return Promise.reject(err)
 })
 

@@ -8,6 +8,11 @@ const config = require('./config')
 // 导入解析 token 的中间件
 const expressJWT = require('express-jwt')
 
+// 连接数据库
+require("./model/connect");
+require("./model/user");
+
+
 // 调用 app.listen 方法，指定端口号并启动web服务器
 app.listen(3007, function () {
   console.log('api server running at http://127.0.0.1:3007')
