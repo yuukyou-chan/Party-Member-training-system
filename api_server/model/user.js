@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	password: {
 		type: String,
@@ -17,11 +18,11 @@ const userSchema = new mongoose.Schema({
 	},
 	nickname: {
 		type: String,
+		required: true
 	},
 	email: {
 		type: String,
 		// 保证邮箱地址在插入数据库时不重复
-		unique: true,
 	},
 	leval: {
 		type: String,

@@ -58,55 +58,56 @@
         stripe>
         <el-table-column
           fixed
-          prop="title"
+          prop="s_name"
           label="姓名"
           width="80">
         </el-table-column>
         <el-table-column
-          prop="id"
+          prop="s_id"
           label="学号"
           >
         </el-table-column>
         <el-table-column
-          prop="status"
+          prop="s_sex"
           label="性别"
           >
         </el-table-column>
         <el-table-column
-          prop="city"
+          prop="s_nation"
           label="民族"
           >
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="s_register"
           label="入学年份"
           >
         </el-table-column>
         <el-table-column
-          prop="zip"
+          prop="s_major"
           label="专业"
           >
         </el-table-column>
           <el-table-column
-            prop="zip"
+            prop="s_politic"
             label="政治面貌"
             >
             </el-table-column>
           <el-table-column
-            prop="zip"
+            prop="s_tel"
             label="联系方式"
+            width="120"
             >
         </el-table-column>
         <el-table-column
             label="状态"
             >
-            <template slot-scope="scope">
-              <el-tag :type="inforStatus[scope.row.status].type">{{ inforStatus[scope.row.status].text}}</el-tag>
-             <!-- <el-tag v-if="scope.row.status === 0" type="success">团员</el-tag>
+            <!-- <template slot-scope="scope">
+              <el-tag :type="inforStatus[scope.row.status].type">{{ inforStatus[scope.row.s_status].text}}</el-tag>
+             <el-tag v-if="scope.row.status === 0" type="success">团员</el-tag>
               <el-tag v-if="scope.row.status === 1" type="info">积极分子</el-tag>
               <el-tag v-if="scope.row.status === 2" type="warning">发展对象</el-tag>
-              <el-tag v-if="scope.row.status === 3" type="danger">党员</el-tag> -->
-            </template>
+              <el-tag v-if="scope.row.status === 3" type="danger">党员</el-tag>
+            </template> -->
         </el-table-column>
         <el-table-column
             fixed="right"
@@ -170,7 +171,7 @@ export default {
         { text: '发展对象', type: 'success' },
         { text: '党员', type: 'danger' }
       ],
-      totalCount: 0, // 总数据条数
+      totalCount: 50, // 总数据条数
       pageSize: 10, // 每页大小
       status: '', // 查询学生状态
       majors: [], // 按专业筛选
@@ -181,23 +182,24 @@ export default {
   computed: {},
   watch: {},
   created () {
-    this.loadInfor(1)
+    this.loadInfor()
     this.loadInforMajors()
   },
   mounted () {},
   methods: {
-    loadInfor (page = 1) {
+    loadInfor () {
       this.loading = true
       getInfor({
-        page,
-        per_page: this.pageSize,
-        status: this.status,
-        channel_id: this.channelId
-        // major: this.major
+        // page,
+        // per_page: this.pageSize,
+        // status: this.status,
+        // channel_id: this.channelId
+        // // major: this.major
       }).then(res => {
-        const { results, total_count: totalCount } = res.data.data
+        const results = res.data.data
         this.infor = results
-        this.totalCount = totalCount
+        console.log(this.infor)
+        // this.totalCount = totalCount
 
         // 关闭加载中 v-loading
         this.loading = false
@@ -209,7 +211,6 @@ export default {
     loadInforMajors () {
       getInforMajors().then(res => {
         this.majors = res.data.data
-        console.log(res.data.data)
       })
     },
 

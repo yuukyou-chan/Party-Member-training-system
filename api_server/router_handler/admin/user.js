@@ -36,7 +36,6 @@ exports.login = async (req, res) => {
   // 接收请求参数
   const { username, password } = req.body;
 
-  console.log(req);
   console.log(req.body);
   console.log(username,password);
   // 处理异常——用户名为空或密码为空

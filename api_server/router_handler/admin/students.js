@@ -6,8 +6,13 @@
 const { Students } = require("../../model/students");
 
 // 获取学生基本信息
-exports.getStuIfon = (req, res) => {
-  const stuInfo = req.body;
+exports.getStuIfon = async (req, res) => {
+  let result = await Students.find()
+  res.send({
+    status: 200,
+    message: "获取学基本信息成功！",
+    data: result,
+  });
 };
 
 // 获取学生专业列表
