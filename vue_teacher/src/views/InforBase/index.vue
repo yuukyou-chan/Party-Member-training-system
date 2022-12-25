@@ -10,10 +10,10 @@
             </el-breadcrumb>
         </div>
         <!-- 数据筛选表单 -->
-        <el-form ref="form" :model="form" label-width="70px" size="small">
+        <el-form ref="form" :model="students" label-width="70px" size="small">
           <el-form-item label="状态">
-            <el-radio-group v-model="status">
-              <el-radio label="null">全部</el-radio>
+            <el-radio-group v-model="students.status">
+              <el-radio :label=null>全部</el-radio>
               <el-radio label="0">共青团员</el-radio>
               <el-radio label="1">积极分子</el-radio>
               <el-radio label="2">发展对象</el-radio>
@@ -21,7 +21,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="选择专业">
-            <el-select v-model="channelId" placeholder="请选择专业">
+            <el-select v-model="students.major" placeholder="请选择专业">
               <el-option
               label="全部"
               :value="null"
@@ -35,7 +35,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="学号查询">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="students.number"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -101,13 +101,13 @@
         <el-table-column
             label="状态"
             >
-            <!-- <template slot-scope="scope">
-              <el-tag :type="inforStatus[scope.row.status].type">{{ inforStatus[scope.row.s_status].text}}</el-tag>
+            <template slot-scope="scope">
+              <el-tag :type="inforStatus[scope.row.s_status].type">{{ inforStatus[scope.row.s_status].text}}</el-tag>
              <el-tag v-if="scope.row.status === 0" type="success">团员</el-tag>
               <el-tag v-if="scope.row.status === 1" type="info">积极分子</el-tag>
               <el-tag v-if="scope.row.status === 2" type="warning">发展对象</el-tag>
               <el-tag v-if="scope.row.status === 3" type="danger">党员</el-tag>
-            </template> -->
+            </template>
         </el-table-column>
         <el-table-column
             fixed="right"
@@ -154,15 +154,10 @@ export default {
   props: {},
   data () {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+      students: {
+        number: null, // 查询学号
+        status: null, // 查询学生状态
+        major: null // 查询的专业
       },
       infor: [], // 信息列表
       inforStatus: [
@@ -173,9 +168,7 @@ export default {
       ],
       totalCount: 50, // 总数据条数
       pageSize: 10, // 每页大小
-      status: '', // 查询学生状态
-      majors: [], // 按专业筛选
-      channelId: null, // 查询文章的频道
+      majors: [], // 专业列表
       loading: true // 表格数据加载中
     }
   },
@@ -187,23 +180,36 @@ export default {
   },
   mounted () {},
   methods: {
-    loadInfor () {
-      this.loading = true
-      getInfor({
-        // page,
-        // per_page: this.pageSize,
-        // status: this.status,
-        // channel_id: this.channelId
-        // // major: this.major
-      }).then(res => {
-        const results = res.data.data
-        this.infor = results
-        console.log(this.infor)
-        // this.totalCount = totalCount
+    async loadInfor () {
+      // this.loading = true
+      // getInfor({
+      //   // page,
+      //   // per_page: this.pageSize,
+      //   s_politic: this.students.status,
+      //   s_id: this.students.number || null,
+      //   s_major: this.students.major
+      // }).then(res => {
+      //   const results = res.data.data
+      //   this.infor = results
+      //   // this.totalCount = totalCount
 
-        // 关闭加载中 v-loading
-        this.loading = false
-      })
+      //   // 关闭加载中 v-loading
+      //   this.loading = false
+      // })
+        try {
+          this.loading = true
+          const res = await getInfor({
+            // page,
+            // per_page: this.pageSize,
+            s_politic: this.students.status,
+            s_id: this.students.number || null,
+            s_major: this.students.major
+          })
+          const results = res.data.data
+          this.infor = results
+        } finally {
+          this.loading = false
+        }
     },
     onCurrentChange (page) {
       this.loadInfor(page)

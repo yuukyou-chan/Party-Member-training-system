@@ -19,26 +19,36 @@ reuqest.interceptors.request.use(function (config) {
 
 reuqest.interceptors.response.use((res) => {
   // Any status code that lie within the range of 2xx cause this function to trigger
+
   const { code } = res.data
 
-  if (code !== 1) {
+  if (code !== 200) {
     const { msg } = res.data
 
     if (msg) {
       Message.error(msg)
     }
 
-    if (code === 110) {
+    if (code === 401) {
       router.push('/login')
     }
   }
 
   return res
 }, (err) => {
-  Vue.prototype.$message.error({
-    type: 'error',
-    message: err.response.data.message
-  })
+  const status = err.response.status
+  if (status === 401) {
+    Vue.prototype.$message.error({
+      type: 'error',
+      message: '身份认证过期，请重新登陆'
+    })
+    router.push('/login')
+  } else {
+    Vue.prototype.$message.error({
+      type: 'error',
+      message: err.response.data.message
+    })
+  }
   return Promise.reject(err)
 })
 

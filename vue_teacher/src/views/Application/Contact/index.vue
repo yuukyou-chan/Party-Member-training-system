@@ -397,7 +397,6 @@ export default {
       })
     },
     Edit (scope) {
-      console.log(this)
       if (scope.row.isshow === undefined) {
         this.$set(scope.row, 'isshow', false)
       }

@@ -107,7 +107,6 @@ export default {
     login () {
       // 开启登录中 loading...
       this.loginLoading = true
-      console.log(this.user)
 
       login(this.user).then(res => {
         // debugger
