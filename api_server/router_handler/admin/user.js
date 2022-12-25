@@ -35,9 +35,6 @@ exports.regUser = async (req, res) => {
 exports.login = async (req, res) => {
   // 接收请求参数
   const { username, password } = req.body;
-
-  console.log(req.body);
-  console.log(username,password);
   // 处理异常——用户名为空或密码为空
   if (username.trim().length == 0 || password.trim().length == 0) {
     return res.cc(new Error("请输入用户名或密码"));

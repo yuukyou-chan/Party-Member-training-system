@@ -7,10 +7,9 @@ const { User } = require("../../model/user");
 exports.getUserInfo = async(req, res) => {
 
   const { _id } = req.query;
-console.log(_id);
+
     // 处理异常——找不到用户
     let user = await User.findOne({ _id });
-    console.log(user);
     user.password=''
     if (!user) {
       return res.cc(new Error("找不到用户"));

@@ -7,12 +7,18 @@ const { Students } = require("../../model/students");
 
 // 获取学生基本信息
 exports.getStuIfon = async (req, res) => {
-  let result = await Students.find()
-  res.send({
-    status: 200,
-    message: "获取学基本信息成功！",
-    data: result,
-  });
+  let result = ''
+  console.log(req.query)
+  result = await Students.find(req.query)
+  if(result.length > 0) {
+    res.send({
+      status: 200,
+      message: "获取学基本信息成功！",
+      data: result,
+    });
+  } else {
+    res.cc('未查询到满足条件的信息')
+  }
 };
 
 // 获取学生专业列表

@@ -45,7 +45,8 @@ const studentsSchema = new mongoose.Schema({
     },
     // 政治身份
     s_politic:{
-        type:String,
+      // 0：共青团员  1：积极分子  2:发展对象  3：党员
+        num:Number,
     },
     // 状态
     s_status:{
