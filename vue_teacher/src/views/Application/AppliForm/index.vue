@@ -14,7 +14,7 @@
         <el-form-item label="状态">
           <el-radio-group v-model="queryForm.status">
             <el-radio label="">全部</el-radio>
-            <el-radio label="未审核">未审核</el-radio>
+            <el-radio label="待审核">未审核</el-radio>
             <el-radio label="已通过">已通过</el-radio>
             <el-radio label="未通过">未通过</el-radio>
           </el-radio-group>
@@ -157,8 +157,6 @@ export default {
         console.log(res)
         this.infor = res.data.records
         this.total = res.data.total
-        console.log(this.total)
-        console.log(this.infor)
       } finally {
         this.loading = false
       }
