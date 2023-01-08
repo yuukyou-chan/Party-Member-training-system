@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 // 创建 express 的服务器实例
 const app = express()
 // 导入校验中间件
@@ -18,6 +19,9 @@ app.listen(3007, function () {
 // 配置cors中间件
 const cors = require('cors')
 app.use(cors())
+
+// 开放静态资源
+app.use(express.static(path.join(__dirname, 'upload')));
 
 // 配置解析表单数据的中间件
 app.use(express.urlencoded({ extended: false }))
