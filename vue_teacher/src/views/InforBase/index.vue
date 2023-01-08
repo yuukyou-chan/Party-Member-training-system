@@ -1,5 +1,4 @@
 <template>
-
   <div class="InforBase-container">
           <!-- 面包屑导航 -->
       <el-card class="filter-card">
@@ -36,12 +35,11 @@
           </el-form-item>
           <el-form-item label="学号查询">
             <el-input v-model="queryForm.studentNumber"></el-input>
-          </el-form-item>
-          <el-form-item>
             <el-button
             type="primary"
             :disabled = "loading"
             @click="list(1)"
+            style="margin-left: 10px;"
             >查询</el-button>
           </el-form-item>
         </el-form>

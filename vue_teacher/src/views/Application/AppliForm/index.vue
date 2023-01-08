@@ -32,11 +32,8 @@
         </el-form-item>
         <el-form-item label="学号查询">
           <el-input v-model="queryForm.studentNumber"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :disabled="loading" @click="getApplicationBooks()"
-            >查询</el-button
-          >
+          <el-button type="primary" :disabled="loading" @click="getApplicationBooks()" style="margin-left: 10px;"
+            >查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>

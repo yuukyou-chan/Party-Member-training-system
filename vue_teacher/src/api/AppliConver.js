@@ -1,15 +1,15 @@
 /**
- * 申请表模块相关请求
+ * 谈话表块相关请求
  */
 import request from '@/utils/request'
 
 /**
- * 获取申请表列表
+ * 获取谈话表
  */
-export const getApplicationSheets = params => {
+export const getApplicationConversations = params => {
   return request({
     method: 'GET',
-    url: 'admin/application/sheets',
+    url: 'admin/application/conversations',
     params
   })
 }
