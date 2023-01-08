@@ -6,13 +6,10 @@ import request from '@/utils/request'
 /**
  * 获取文章列表
  */
-export const getInfor = params => {
+export const list = params => {
   return request({
     method: 'GET',
-    url: '/stu/StuIfon',
-    // Body 参数使用 data 设置
-    // Query 参 数使用 params 设置
-    // Headers 参数使用 headers 设置
+    url: 'admin/students/list',
     params
   })
 }

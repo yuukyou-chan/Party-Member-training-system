@@ -7,7 +7,7 @@ import request from '@/utils/request'
 export const login = data => {
   return request({
     method: 'POST',
-    url: '/api/login',
+    url: 'admin/user/login',
     // data 用来设置 POST 请求体
     data: data
   })

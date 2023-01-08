@@ -10,18 +10,18 @@
             </el-breadcrumb>
         </div>
         <!-- 数据筛选表单 -->
-        <el-form ref="form" :model="students" label-width="70px" size="small">
+        <el-form ref="form" :model="queryForm" label-width="70px" size="small">
           <el-form-item label="状态">
-            <el-radio-group v-model="students.status">
-              <el-radio :label=null>全部</el-radio>
-              <el-radio label="0">共青团员</el-radio>
-              <el-radio label="1">积极分子</el-radio>
-              <el-radio label="2">发展对象</el-radio>
-              <el-radio label="3">共产党员</el-radio>
+            <el-radio-group v-model="queryForm.politic">
+              <el-radio label=''>全部</el-radio>
+              <el-radio label="共青团员">共青团员</el-radio>
+              <el-radio label="积极分子">积极分子</el-radio>
+              <el-radio label="发展对象">发展对象</el-radio>
+              <el-radio label="共产党员">共产党员</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="选择专业">
-            <el-select v-model="students.major" placeholder="请选择专业">
+            <el-select v-model="queryForm.major" placeholder="请选择专业">
               <el-option
               label="全部"
               :value="null"
@@ -35,13 +35,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="学号查询">
-            <el-input v-model="students.number"></el-input>
+            <el-input v-model="queryForm.studentNumber"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button
             type="primary"
             :disabled = "loading"
-            @click="loadInfor(1)"
+            @click="list(1)"
             >查询</el-button>
           </el-form-item>
         </el-form>
@@ -58,42 +58,42 @@
         stripe>
         <el-table-column
           fixed
-          prop="s_name"
+          prop="username"
           label="姓名"
           width="80">
         </el-table-column>
         <el-table-column
-          prop="s_id"
+          prop="studentNumber"
           label="学号"
           >
         </el-table-column>
         <el-table-column
-          prop="s_sex"
+          prop="sex"
           label="性别"
           >
         </el-table-column>
         <el-table-column
-          prop="s_nation"
+          prop="nation"
           label="民族"
           >
         </el-table-column>
         <el-table-column
-          prop="s_register"
+          prop="register"
           label="入学年份"
           >
         </el-table-column>
         <el-table-column
-          prop="s_major"
+          prop="major"
           label="专业"
           >
         </el-table-column>
           <el-table-column
-            prop="s_politic"
+            prop="politic"
             label="政治面貌"
             >
             </el-table-column>
           <el-table-column
-            prop="s_tel"
+            prop="tel"
             label="联系方式"
             width="120"
             >
@@ -101,12 +101,11 @@
         <el-table-column
             label="状态"
             >
-            <template slot-scope="scope">
-              <el-tag :type="inforStatus[scope.row.s_status].type">{{ inforStatus[scope.row.s_status].text}}</el-tag>
-             <el-tag v-if="scope.row.status === 0" type="success">团员</el-tag>
-              <el-tag v-if="scope.row.status === 1" type="info">积极分子</el-tag>
-              <el-tag v-if="scope.row.status === 2" type="warning">发展对象</el-tag>
-              <el-tag v-if="scope.row.status === 3" type="danger">党员</el-tag>
+            <template #default="{row}">
+             <el-tag v-if="row.politic ==='共青团员' " type="success">共青团员</el-tag>
+              <el-tag v-else-if="row.politic === '积极分子'" type="info">积极分子</el-tag>
+              <el-tag v-else-if="row.politic === '发展对象'" type="warning">发展对象</el-tag>
+              <el-tag v-else-if="row.politic === '共产党员'" type="danger">共产党员</el-tag>
             </template>
         </el-table-column>
         <el-table-column
@@ -131,43 +130,43 @@
       </el-table>
       <!-- 列表分页 -->
       <el-pagination
-          layout="prev, pager, next"
-          background
-          :total="totalCount"
-          :disabled="loading"
-          @current-change="onCurrentChange"
-          :page-size='pageSize'>
-        </el-pagination>
+      background
+      @size-change="list"
+      @current-change="list"
+      :current-page.sync="queryForm.pageNum"
+      :page-sizes="[10, 25, 50, 100]"
+      :page-size.sync="queryForm.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
 </el-card>
   </div>
 </template>
 
 <script>
 import {
-  getInfor,
-  getInforMajors,
+  list, // 获取学生列表
   deleteArticle
 } from '@/api/InforBase'
+
+import {
+  getMajors // 获取专业列表
+} from '@/api/AppliForm'
 export default {
   name: 'InfonbaseIndex',
   components: {},
   props: {},
   data () {
     return {
-      students: {
-        number: null, // 查询学号
-        status: null, // 查询学生状态
+      queryForm: {
+        pageNum: 1,
+        pageSize: 10,
+        politic: null, // 政治身份
+        studentNumber: null, // 学号
         major: null // 查询的专业
       },
       infor: [], // 信息列表
-      inforStatus: [
-        { text: '团员', type: 'info' },
-        { text: '积极分子', type: '' },
-        { text: '发展对象', type: 'success' },
-        { text: '党员', type: 'danger' }
-      ],
-      totalCount: 50, // 总数据条数
-      pageSize: 10, // 每页大小
+      total: 0, // 总数据条数
       majors: [], // 专业列表
       loading: true // 表格数据加载中
     }
@@ -175,48 +174,29 @@ export default {
   computed: {},
   watch: {},
   created () {
-    this.loadInfor()
-    this.loadInforMajors()
+    this.init()
   },
   mounted () {},
   methods: {
-    async loadInfor () {
-      // this.loading = true
-      // getInfor({
-      //   // page,
-      //   // per_page: this.pageSize,
-      //   s_politic: this.students.status,
-      //   s_id: this.students.number || null,
-      //   s_major: this.students.major
-      // }).then(res => {
-      //   const results = res.data.data
-      //   this.infor = results
-      //   // this.totalCount = totalCount
-
-      //   // 关闭加载中 v-loading
-      //   this.loading = false
-      // })
-        try {
-          this.loading = true
-          const res = await getInfor({
-            // page,
-            // per_page: this.pageSize,
-            s_politic: this.students.status,
-            s_id: this.students.number || null,
-            s_major: this.students.major
-          })
-          const results = res.data.data
-          this.infor = results
-        } finally {
-          this.loading = false
-        }
+    init () {
+      // 获取学生列表
+      this.list()
+      // 获取专业列表
+      this.getMajors()
     },
-    onCurrentChange (page) {
-      this.loadInfor(page)
+    async list () {
+      try {
+        this.loading = true
+        const res = await list(this.queryForm)
+        this.infor = res.data.records
+        this.total = res.data.total
+      } finally {
+        this.loading = false
+      }
     },
-    loadInforMajors () {
-      getInforMajors().then(res => {
-        this.majors = res.data.data
+    getMajors () {
+      getMajors().then(res => {
+        this.majors = res.data
       })
     },
 

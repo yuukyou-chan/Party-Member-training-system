@@ -12,35 +12,37 @@
       2、通过 ref 获取 el-form 组件，调用组件的 validate 进行验证
       -->
     <el-form
-      class="login-form"
       ref="login-form"
+      class="login-form"
       :model="user"
       :rules="formRules"
-      >
-    <h4>欢迎使用<br>信息工程学院智慧培优平台</h4>
-  <el-form-item prop="mobile">
-    <el-input
-    v-model="user.username"
-    placeholder="请输入管理者账号"></el-input>
-  </el-form-item>
-  <el-form-item prop="code">
-    <el-input
-    type="password"
-    v-model="user.password"
-    placeholder="请输入密码"></el-input>
-  </el-form-item>
-  <el-form-item prop="agree">
-    <el-checkbox v-model="agree"> 我已阅读并同意用户协议和隐私条款</el-checkbox>
-
-  </el-form-item>
-  <el-form-item>
-    <el-button
-    type="primary"
-    @click="onLogin"
-    :loading='loginLoading'
-    class="login-btn">登录</el-button>
-  </el-form-item>
-</el-form>
+    >
+      <h4>欢迎使用<br />信息工程学院智慧培优平台</h4>
+      <el-form-item prop="mobile">
+        <el-input v-model="user.username" placeholder="请输入管理者账号" />
+      </el-form-item>
+      <el-form-item prop="code">
+        <el-input
+          v-model="user.password"
+          type="password"
+          placeholder="请输入密码"
+        />
+      </el-form-item>
+      <el-form-item prop="agree">
+        <el-checkbox v-model="agree">
+          我已阅读并同意用户协议和隐私条款</el-checkbox
+        >
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          :loading="loginLoading"
+          class="login-btn"
+          @click="onLogin"
+          >登录</el-button
+        >
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -60,7 +62,8 @@ export default {
       },
       agree: '', // 是否同意协议的选中状态
       loginLoading: false, // 登录的loading状态
-      formRules: { // 表单验证规则属性
+      formRules: {
+        // 表单验证规则属性
         username: [
           { required: true, message: '账号不能为空', trigger: 'change' },
           { pattern: /\d{8}$/, message: '请输入正确的账号', trigger: 'change' }
@@ -108,35 +111,37 @@ export default {
       // 开启登录中 loading...
       this.loginLoading = true
 
-      login(this.user).then(res => {
-        // debugger
-        const { token } = res.data
-        // 登录成功
-        this.$message({
-          message: '登录成功',
-          type: 'success'
-        })
+      login(this.user)
+        .then(res => {
+          // debugger
+          const { token } = res
+          // 登录成功
+          this.$message({
+            message: '登录成功',
+            type: 'success'
+          })
 
-        // 关闭loading
-        this.loginLoading = false
+          // 关闭loading
+          this.loginLoading = false
 
-        // 将接口返回的用户相关数据存储到本地
-        localStorage.token = token
-        // 保存到vuex中
-        this.updateToken(token)
-        window.localStorage.setItem('user', JSON.stringify(res.data.data))
-        this.updateUserInfo(res.data.data)
-        // 跳转到首页
-        this.$router.push('/').catch(err => {
-          console.log(err)
+          // 将接口返回的用户相关数据存储到本地
+          window.localStorage.token = token
+          // 保存到vuex中
+          this.updateToken(token)
+          window.localStorage.setItem('user', JSON.stringify(res.data))
+          this.updateUserInfo(res.data)
+          // 跳转到首页
+          this.$router.push('/').catch(err => {
+            console.log(err)
+          })
         })
-      }).catch(err => {
-        // 登录失败
-        console.log('登录失败', err)
-        this.$message.error('登陆失败，账号或验证码错误')
-        // 关闭loading
-        this.loginLoading = false
-      })
+        .catch(err => {
+          // 登录失败
+          console.log('登录失败', err)
+          this.$message.error('登陆失败，账号或验证码错误')
+          // 关闭loading
+          this.loginLoading = false
+        })
     }
   }
 }
@@ -155,15 +160,15 @@ export default {
   background: url(bg4.jpg) no-repeat;
   background-size: cover;
 }
-.login-form{
+.login-form {
   background-color: #fff;
   padding: 20px;
   min-width: 300px;
 }
-.login-btn{
+.login-btn {
   width: 100%;
 }
-h4{
+h4 {
   margin-top: 5px;
   margin-bottom: 50px;
   text-align: center;

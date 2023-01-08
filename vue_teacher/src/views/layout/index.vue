@@ -71,7 +71,10 @@ export default {
   mounted () {},
   methods: {
     loadUserProfile () {
-      this.user = JSON.parse(window.localStorage.getItem('user'))
+      const user = JSON.parse(window.localStorage.getItem('user'))
+      user.nickname = user.username
+      this.user = user
+      console.log(user)
     },
 
     onLogout () {

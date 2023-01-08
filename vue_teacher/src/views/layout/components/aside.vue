@@ -70,6 +70,10 @@
         <el-menu-item index="/userPwd">重置密码</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
+    <el-menu-item index="/adminAcount">
+      <i class="el-icon-document-copy"></i>
+      <span slot="title">管理员管理</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

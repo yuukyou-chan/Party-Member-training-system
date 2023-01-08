@@ -34,7 +34,7 @@ reuqest.interceptors.response.use((res) => {
     }
   }
 
-  return res
+  return res.data
 }, (err) => {
   const status = err.response.status
   if (status === 401) {

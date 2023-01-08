@@ -12,6 +12,7 @@ import DevelopInspection from '@/views/Activists/DevelopInspection/'
 import Publish from '@/views/publish'
 import UserInfo from '@/views/user/userInfo.vue'
 import UserPwd from '@/views/user/userPwd.vue'
+import AdminAcount from '@/views/adminAcount/index.vue'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,11 @@ const routes = [
         path: '/userPwd',
         name: 'UserPwd',
         component: UserPwd
+      },
+      {
+        path: '/adminAcount',
+        name: 'AdminAcount',
+        component: AdminAcount
       }
     ]
   }

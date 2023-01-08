@@ -6,23 +6,20 @@ import request from '@/utils/request'
 /**
  * 获取文章列表
  */
-export const getInfor = params => {
+export const getApplicationBooks = params => {
   return request({
     method: 'GET',
-    url: '/mp/v1_0/articles',
-    // Body 参数使用 data 设置
-    // Query 参 数使用 params 设置
-    // Headers 参数使用 headers 设置
+    url: '/admin/application/applicationBooks',
     params
   })
 }
 /**
  * 获取文章频道（专业）
  */
-export const getInforMajors = params => {
+export const getMajors = params => {
   return request({
     method: 'GET',
-    url: '/mp/v1_0/channels'
+    url: '/admin/other/majors'
   })
 }
 /**
