@@ -72,6 +72,11 @@ const studentSchema = new mongoose.Schema({
   major: {
     type: String,
   },
+  // 谈话联系人
+  talker:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'User'
+  }
 });
 
 // 创建集合

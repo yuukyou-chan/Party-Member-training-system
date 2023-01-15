@@ -3,26 +3,35 @@ const { ApplicationBook } = require("../../../model/applicationBook");
 const _ = require('lodash')
 
 module.exports = async (req, res) => {
-  const fields = _.pick(req.query,['_id','status']);
+  const fields = _.pick(req.body,['_id','status','message']);
 
   if(!fields._id){
-    res.cc('【_id】字段不能为空',500)
+
+    return res.error({
+      message:'【_id】字段不能为空',
+    })
   }
 
   if(!fields.status){
-    res.cc('【status】字段不能为空',500)
+
+    return res.error({
+      message:'【status】字段不能为空',
+    })
   }
+
+  // 记录审核时间
+  fields.checkTime=new Date()
 
   try {
     let data = await ApplicationBook.findByIdAndUpdate(fields._id,{$set:fields},{new:true,select:['-u_id']})
-    res.send({
-      status: 200,
-      message: "修改申请书成功！",
+    res.success({
       data,
-    });
+      message:'修改申请书成功！'
+    })
   } catch (error) {
-    res.cc(error,500)
+    res.error({
+      message:error
+    })
   }
-
   
 };

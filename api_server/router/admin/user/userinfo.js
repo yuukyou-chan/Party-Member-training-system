@@ -13,8 +13,7 @@ module.exports = async (req, res) => {
 
   user.password = "";
 
-  res.send({
-    status: 200,
+  res.success({
     message: "获取用户基本信息成功！",
     data: user,
   });

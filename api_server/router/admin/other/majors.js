@@ -11,9 +11,8 @@ module.exports = async (req, res) => {
   let result = await Student.find({}).distinct("major")
   result=result.filter(item=>item)
 
-  res.send({
-    status: 200,
+  res.success({
     message: "获取学生专业信息成功！",
     data: result,
-  });
+  })
 };

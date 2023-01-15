@@ -21,11 +21,13 @@ module.exports = async (req, res) => {
 
   if(studentNumber){
     result.records=result.records.filter(item=>item['u_id'].studentNumber===studentNumber)
+  }else if(major){
+    result.records=result.records.filter(item=>item['u_id'].major===major)
   }
 
-  res.send({
-    status: 200,
-    message: "获取申请书列表成功！",
-    data: result,
-  });
+
+  res.success({
+    message:'获取申请书列表成功！',
+    data:result
+  })
 };

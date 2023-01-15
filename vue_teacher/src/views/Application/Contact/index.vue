@@ -9,9 +9,6 @@
           <el-breadcrumb-item>谈话人分配</el-breadcrumb-item>
         </el-breadcrumb>
       </el-card>
-
-<el-row :gutter="20">
-  <el-col :span="12"><div class="grid-content bg-purple">
   <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span style="font-size: 17px;">谈话人分配情况</span>
@@ -133,146 +130,6 @@
 
   </el-card>
   </div>
-  </el-col>
-  <el-col :span="12"><div class="grid-content bg-purple">
-  <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span style="font-size: 17px;">谈话人信息</span>
-         </div>
-      <el-form ref="form" :model="form" label-width="110px" size="small">
-        <el-form-item label="状态">
-          <el-radio-group v-model="status">
-            <el-radio :label="null">全部</el-radio>
-            <el-radio :label="0">已分配</el-radio>
-            <el-radio :label="1">未分配</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="查询方式">
-          <el-select v-model="checkWayTeacValue" placeholder="请选择查询方式">
-            <el-option
-            v-for="wayTeac in checkWayTeac"
-            :label="wayTeac.label"
-            :value="wayTeac.value"
-            :key="wayTeac.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="谈话人编号查询">
-          <el-input v-model="form.name"></el-input>
-          <el-button
-            type="primary"
-            :disabled = "loading"
-            @click="loadInfor(1)"
-            style="margin-left: 20px;"
-           >查询</el-button>
-           <el-button
-            type="primary"
-            @click="dialogFormVisible = true"
-            style="margin-left: 20px;"
-           >添加联系人</el-button>
-        </el-form-item>
-      </el-form>
-
-       <el-table
-          v-loading="loading"
-          class="list-lable"
-          :data="infor"
-          style="width: 100%"
-          stripe>
-          <el-table-column
-            fixed
-            prop="title"
-            label="姓名"
-            width="80">
-          </el-table-column>
-          <el-table-column
-            prop="id"
-            label="编号"
-            >
-          </el-table-column>
-          <el-table-column
-            prop="status"
-            label="性别"
-            >
-          </el-table-column>
-
-            <el-table-column
-              prop="zip"
-              label="联系方式"
-              >
-          </el-table-column>
-          <el-table-column
-              label="状态"
-              >
-              <template slot-scope="scope">
-                <el-tag :type="inforStatus[scope.row.status].type">{{ inforStatus[scope.row.status].text}}</el-tag>
-               <!-- <el-tag v-if="scope.row.status === 0" type="success">团员</el-tag>
-                <el-tag v-if="scope.row.status === 1" type="info">积极分子</el-tag>
-                <el-tag v-if="scope.row.status === 2" type="warning">发展对象</el-tag>
-                <el-tag v-if="scope.row.status === 3" type="danger">党员</el-tag> -->
-              </template>
-          </el-table-column>
-          <el-table-column
-              fixed="right"
-              label="操作"
-              width="120">
-               <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    type="primary"
-                    circle
-                    icon="el-icon-edit"
-                    v-show="!scope.row.isshow"
-                    @click="Edit(scope)"></el-button>
-                   <el-button
-                    v-show="scope.row.isshow"
-                    size="mini"
-                    type="success"
-                    icon="el-icon-check"
-                    circle></el-button>
-                    <el-button
-                    v-show="scope.row.isshow"
-                    size="mini"
-                    type="danger"
-                    icon="el-icon-close"
-                    @click="Close(scope)"
-                    circle></el-button>
-                </template>
-          </el-table-column>
-        </el-table>
-        <!-- 列表分页 -->
-        <el-pagination
-            layout="prev, pager, next"
-            background
-            :total="totalCount"
-            :disabled="loading"
-            @current-change="onCurrentChange"
-            :page-size='pageSize'>
-          </el-pagination>
-          <el-dialog title="添加谈话联系人" :visible.sync="dialogFormVisible" :append-to-body="true">
-            <el-form :model="addSpeakers"  :inline="true">
-              <el-form-item label="姓名" label-width="140px">
-                <el-input v-model="addSpeakers.name" style="width: 150px;"></el-input>
-              </el-form-item>
-              <el-form-item label="编号" label-width="140px">
-                <el-input v-model="addSpeakers.num" style="width: 150px;"></el-input>
-              </el-form-item>
-              <el-form-item label="性别" label-width="140px">
-                <el-input v-model="addSpeakers.sex" style="width: 150px;"></el-input>
-              </el-form-item>
-              <el-form-item label="联系方式" label-width="140px">
-                <el-input v-model="addSpeakers.phone" style="width: 150px;"></el-input>
-              </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogFormVisible = false">添 加</el-button>
-            </div>
-          </el-dialog>
-  </el-card>
-  </div></el-col>
-</el-row>
-  </div>
 </template>
 
 <script>
@@ -349,7 +206,7 @@ export default {
     this.loadInfor(1)
     this.loadInforMajors()
   },
-  mounted () {},
+  mounted () { },
   methods: {
     loadInfor (page = 1) {
       this.loading = true
@@ -432,7 +289,7 @@ export default {
 .filter-card {
   margin-bottom: 20px;
 }
-.list-lable{
+.list-lable {
   margin-bottom: 20px;
 }
 .el-input--small {

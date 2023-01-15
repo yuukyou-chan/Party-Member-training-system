@@ -13,7 +13,10 @@ module.exports = async (req, res) => {
   // 注册用户
   await User.create(req.body);
   //  注册成功
-  res.cc("注册成功！", 200);
+
+  res.success({
+    message:'更新用户信息成功！'
+  })
 };
 
 
