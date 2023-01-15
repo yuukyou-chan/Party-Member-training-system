@@ -40,17 +40,6 @@
         <el-menu-item index="/DevelopInspection">培养考察</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
-    <el-submenu index="ThoughtReports">
-      <template slot="title">
-        <i class="el-icon-location"></i>
-        <span>思想汇报</span>
-      </template>
-      <el-menu-item-group>
-        <el-menu-item index="/firRe">第一季度</el-menu-item>
-        <el-menu-item index="/secRe">第二季度</el-menu-item>
-        <el-menu-item index="/thiRe">第三季度</el-menu-item>
-      </el-menu-item-group>
-    </el-submenu>
     <el-menu-item index="/feedback">
       <i class="el-icon-files"></i>
       <span slot="title">反馈箱</span>

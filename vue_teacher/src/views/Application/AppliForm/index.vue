@@ -57,12 +57,13 @@
         <el-table-column prop="u_id.studentNumber" label="学号" width="100">
         </el-table-column>
         <el-table-column  label="申请书">
-          <template #default="row">
+          <template #default="{row}">
             <el-image
               style="width: 50px; height: 50px"
               :src="row.imgUrl"
-              :preview-src-list="row.imgUrl"
+              :preview-src-list="[row.imgUrl]"
             />
+            <!-- <img :src="row.imgUrl" style="width: 50px; height: 50px"/> -->
           </template>
         </el-table-column>
 
