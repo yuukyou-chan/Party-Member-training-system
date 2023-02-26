@@ -7,7 +7,6 @@ import InforBase from '@/views/InforBase/'
 import AppliForm from '@/views/Application/AppliForm/'
 import AppliText from '@/views/Application/AppliText/'
 import Contact from '@/views/Application/Contact/'
-import Conversation from '@/views/Application/Conversation/'
 import DevelopInspection from '@/views/Activists/DevelopInspection/'
 import Publish from '@/views/publish'
 import UserInfo from '@/views/user/userInfo.vue'
@@ -51,11 +50,6 @@ const routes = [
         path: '/contact',
         name: 'Contact',
         component: Contact
-      },
-      {
-        path: '/conversation',
-        name: 'Conversation',
-        component: Conversation
       },
       {
         path: '/developInspection',
