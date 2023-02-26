@@ -21,6 +21,14 @@ const applicationSheetSchema = new mongoose.Schema({
   createTime:{
     type:Date,
     default:new Date()
+  },
+  // 审核意见
+  message:{
+    type:String,
+  },
+   // 审核时间
+   checkTime:{
+    type:Date
   }
 });
 

@@ -24,8 +24,8 @@ module.exports = async (req, res) => {
       condition.politic=politic
     }
   result = await pagination(Student).find(condition).page(pageNum).size(pageSize).exec()
-    res.send({
-      status: 200,
+
+    res.success({
       message: "获取学基本信息成功！",
       data: result,
     });

@@ -17,10 +17,18 @@ const applicationBookSchema = new mongoose.Schema({
     type:String,
     default:'待审核', // ['待审核','已通过','未通过']
   },
+  // 审核意见
+  message:{
+    type:String,
+  },
   // 创建时间
   createTime:{
     type:Date,
     default:new Date()
+  },
+  // 审核时间
+  checkTime:{
+    type:Date
   }
 });
 

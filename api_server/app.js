@@ -18,6 +18,7 @@ app.listen(3007, function () {
 })
 // 配置cors中间件
 const cors = require('cors')
+const { log } = require('console')
 app.use(cors())
 
 // 开放静态资源
@@ -38,17 +39,41 @@ app.use(function (req, res, next) {
       message: err instanceof Error ? err.message : err,
     })
   }
+
+
+  res.success=(({data=[],message,code=200})=>{
+    res.status(code).send({
+      code,
+      message: message instanceof Error ? message.message : message,
+      data
+    })
+  })
+
+  res.error=(({message,code=500})=>{
+    res.status(code).send({
+      code,
+      message: message instanceof Error ? message.message : message,
+    })
+  })
+
   next()
 })
 
 // 错误中间件
 app.use(function (err, req, res, next) {
+  console.log('???')
   // 数据验证失败
-  if (err instanceof joi.ValidationError) return res.cc(err,500)
+  if (err instanceof joi.ValidationError) return res.error({
+    message:err
+  })
   // 捕获身份认证失败的错误
-  if (err.name === 'UnauthorizedError') return res.cc('身份认证失败！')
+  if (err.name === 'UnauthorizedError') return res.error({
+    message:'身份认证失败！'
+  })
   // 未知错误
-  res.cc(err)
+  res.error({
+    message:err
+  })
 })
 
 // 解析 Token 中间件
