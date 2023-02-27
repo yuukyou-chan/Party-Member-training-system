@@ -7,23 +7,15 @@ const { Student } = require("../../../model/students");
 // 导入mongoose-sex-page模块
 const pagination = require("mongoose-sex-page");
 
+const _ =require('lodash')
+
 module.exports = async (req, res) => {
     // 第几页，每页多少条数据，政治身份，专业，学号
-    const { pageNum = 1, pageSize = 10, politic,major,studentNumber } = req.query;
+    const { pageNum = 1, pageSize = 10} = req.query;
 
-    const condition={
-      pageNum,
-      pageSize
-    }
-  
-    if(major){
-      condition.major=major
-    }
-  
-    if(politic){
-      condition.politic=politic
-    }
-  result = await pagination(Student).find(condition).page(pageNum).size(pageSize).exec()
+    const condition=_.omit(req.query,['password'])
+
+    const result = await pagination(Student).find(condition).page(pageNum).size(pageSize).exec()
 
     res.success({
       message: "获取学基本信息成功！",
