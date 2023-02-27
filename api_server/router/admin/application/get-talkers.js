@@ -4,8 +4,9 @@ const { Student } = require("../../../model/students");
 const pagination = require("mongoose-sex-page");
 
 module.exports = async (req, res) => {
-  // 第几页、每页多少条数据、学生姓名、学生学号、老师姓名
-  const { pageNum, pageSize, studentUsername, studentNumber, teacherUsername } = req.query;
+  // 第几页、每页多少条数据、学生姓名、学生学号、教室姓名
+  const { pageNum, pageSize, studentUsername, studentNumber, teacherUsername } =
+    req.query;
 
   const condition = {};
 
@@ -19,16 +20,21 @@ module.exports = async (req, res) => {
     condition.studentNumber = studentNumber;
   }
 
+  console.log(condition);
+
   let result = await pagination(Student)
     .find(condition)
-    .page(1)
-    .size(10000)
+    .page(pageNum || 1)
+    .size(pageSize || 10)
     .populate("talker")
     .exec();
 
-  // 老师姓名
+    // 老师姓名
   if (teacherUsername) {
-    result.records = result.records.filter(item => item["talker"]?.username === teacherUsername).slice(pageNum-1,pageSize);
+    result.records = result.records.filter((item) => {
+        console.log(item);
+        return item["talker"]?.username === teacherUsername
+    });
   }
 
   res.success({
