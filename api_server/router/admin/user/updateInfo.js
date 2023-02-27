@@ -1,22 +1,17 @@
 // 导入数据库模块
-const { User } = require("../../../model/users");
+const { User } = require('../../../model/users');
 
 module.exports = async (req, res) => {
-  // 处理异常——判断用户是否存在
-  let user = await User.findOne({ username:req.body.username });
-  if (user) {
-    return res.cc(new Error("用户名被占用，请更换其他用户名"));
-  }
-
-  // 对用户密码进行加密
-  req.body.password = bcrypt.hashSync(req.body.password, 10);
-  // 注册用户
-  await User.create(req.body);
-  //  注册成功
+  const { username, email, tel, nickname } = req.body;
+  // 根据用户名找到用户数据
+  let user = await User.updateOne(
+    { username: username },
+    { $set: {email: email, nickname: nickname, tel: tel} },
+    {upsert:true}
+  )
 
   res.success({
-    message:'更新用户信息成功！'
-  })
+    message: '更新用户信息成功！',
+    data: user,
+  });
 };
-
-

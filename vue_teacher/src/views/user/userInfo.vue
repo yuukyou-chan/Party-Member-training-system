@@ -10,10 +10,10 @@
       ref="userFormRef"
       label-width="100px"
     >
-      <el-form-item label="登录名称" prop="username">
+      <el-form-item label="登录账号" prop="username">
         <el-input v-model="userForm.username" disabled></el-input>
       </el-form-item>
-      <el-form-item label="用户昵称" prop="nickname">
+      <el-form-item label="用户姓名" prop="nickname">
         <el-input
           v-model="userForm.nickname"
           minlength="1"
@@ -22,6 +22,9 @@
       </el-form-item>
       <el-form-item label="用户邮箱" prop="email">
         <el-input v-model="userForm.email"></el-input>
+      </el-form-item>
+      <el-form-item label="用户电话" prop="tel">
+        <el-input v-model="userForm.tel"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitFn">提交修改</el-button>
@@ -39,20 +42,24 @@ export default {
   data () {
     return {
       userForm: {
-        username: this.$store.state.userInfo.nickname,
-        // username: JSON.parse(window.localStorage.user).nickname,
-        nickname: '',
-        email: ''
+        username: this.$store.state.userInfo.username,
+        nickname: this.$store.state.userInfo.nickname,
+        email: this.$store.state.userInfo.email,
+        tel: this.$store.state.userInfo.username
       },
       // 表单的验证规则对象
       userFormRules: {
         nickname: [
-          { required: true, message: '请输入用户昵称', trigger: 'blur' },
-          { pattern: /^\S{1,10}$/, message: '昵称必须是1-10位的非空字符串', trigger: 'blur' }
+          { message: '请输入用户姓名', trigger: 'blur' },
+          { pattern: /^\S{1,10}$/, message: '姓名必须是1-10位的非空字符串', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请输入用户邮箱', trigger: 'blur' },
+          { message: '请输入用户邮箱', trigger: 'blur' },
           { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+        ],
+        tel: [
+          { message: '请输入用户电话号码', trigger: 'blur' },
+          { message: '手机号格式不正确', trigger: 'blur' }
         ]
       }
     }
@@ -68,11 +75,8 @@ export default {
         if (valid) {
           // 验证成功
           console.log(this.userForm)
-          // 根据接口文档指示, 需要携带id(必须)
-          this.userForm.id = this.$store.state.userInfo.id
           // 调用更新用户基本信息接口, 把用户在页面输入的新内容传给后台保存
           const { data: res } = await updateUserInfoAPI(this.userForm)
-          if (res.code !== 0) return this.$message.error('更新用户信息失败！')
           // 更新用户信息成功，刷新 Vuex 中的数据
           this.$message.success('更新成功！')
           // 重新让vuex获取下最新的用户数据
